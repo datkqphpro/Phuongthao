@@ -199,75 +199,77 @@
         </div>
     </div>
     
-    <script>
-        const body = document.body;
-        const heartCharacters = ['💖', '❤️', '💕', '💘', '💞']; 
-        
-        const mainModal = document.getElementById('christmasModal');
-        const successModal = document.getElementById('successModal');
-        const btnYes = document.getElementById('btnYes');
-        const btnNo = document.getElementById('btnNo');
-        const btnCloseSuccess = document.getElementById('btnCloseSuccess');
-        const modalContent = document.querySelector('#christmasModal .modal-content');
+   <script>
+    const body = document.body;
+    const heartCharacters = ['💖', '❤️', '💕', '💘', '💞'];
+    
+    const mainModal = document.getElementById('christmasModal');
+    const successModal = document.getElementById('successModal');
+    const btnYes = document.getElementById('btnYes');
+    const btnNo = document.getElementById('btnNo');
+    const btnCloseSuccess = document.getElementById('btnCloseSuccess');
+    const modalContent = document.querySelector('#christmasModal .modal-content');
 
-        // Hàm tạo một trái tim mới (GIỮ NGUYÊN)
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            const charIndex = Math.floor(Math.random() * heartCharacters.length);
-            heart.innerHTML = heartCharacters[charIndex];
-            const startX = Math.random() * window.innerWidth;
-            heart.style.left = startX + 'px';
-            heart.style.bottom = (Math.random() * 20) + 'px';
-            const floatOffset = (Math.random() - 0.5) * 100 + 'px'; 
-            heart.style.setProperty('--float-offset', floatOffset);
-            const delay = Math.random() * 5; 
-            const duration = 8 + Math.random() * 4; 
-            heart.style.animation = `float-up ${duration}s ease-out ${delay}s 1 forwards`;
-            const size = 18 + Math.random() * 10;
-            heart.style.fontSize = size + 'px';
-            body.appendChild(heart);
-            setTimeout(() => {
-                heart.remove();
-            }, (duration * 1000) + (delay * 1000));
-        }
+    // Hàm tạo một trái tim mới (GIỮ NGUYÊN)
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        const charIndex = Math.floor(Math.random() * heartCharacters.length);
+        heart.innerHTML = heartCharacters[charIndex];
+        const startX = Math.random() * window.innerWidth;
+        heart.style.left = startX + 'px';
+        heart.style.bottom = (Math.random() * 20) + 'px';
+        const floatOffset = (Math.random() - 0.5) * 100 + 'px';
+        heart.style.setProperty('--float-offset', floatOffset);
+        const delay = Math.random() * 5;
+        const duration = 8 + Math.random() * 4;
+        heart.style.animation = `float-up ${duration}s ease-out ${delay}s 1 forwards`;
+        const size = 18 + Math.random() * 10;
+        heart.style.fontSize = size + 'px';
+        body.appendChild(heart);
+        setTimeout(() => {
+            heart.remove();
+        }, (duration * 1000) + (delay * 1000));
+    }
 
-        setInterval(createHeart, 150); 
-        
-        /* --- LOGIC XỬ LÝ NÚT BẤM VÀ DI CHUYỂN --- */
+    setInterval(createHeart, 150);
+    
+    /* --- LOGIC XỬ LÝ NÚT BẤM VÀ DI CHUYỂN --- */
 
-        // Hàm cho nút "Có" (Hiển thị Modal Chúc mừng)
-        btnYes.addEventListener('click', () => {
-            mainModal.style.display = 'none'; // Ẩn Modal cũ
-            successModal.style.display = 'flex'; // Hiển thị Modal mới (và pháo hoa)
-        });
-        
-        // Hàm đóng Modal Chúc mừng
-        btnCloseSuccess.addEventListener('click', () => {
-             successModal.style.display = 'none';
-        });
+    // Hàm cho nút "Có" (Hiển thị Modal Chúc mừng)
+    btnYes.addEventListener('click', () => {
+        mainModal.style.display = 'none'; // Ẩn Modal cũ
+        successModal.style.display = 'flex'; // Hiển thị Modal mới (và pháo hoa)
+    });
+    
+    // Hàm đóng Modal Chúc mừng
+    btnCloseSuccess.addEventListener('click', () => {
+          successModal.style.display = 'none';
+    });
 
-        // Hàm tạo tọa độ ngẫu nhiên cho nút 'Không'
-        function moveNoButton() {
-            const maxOffset = 250; 
-            const newX = (Math.random() - 0.5) * maxOffset * 2; 
-            const newY = (Math.random() - 0.5) * maxOffset * 1.5; 
-            const newRotate = (Math.random() - 0.5) * 45; 
-            const newScale = 0.8 + Math.random() * 0.4; 
+    // Hàm tạo tọa độ ngẫu nhiên cho nút 'Không'
+    function moveNoButton() {
+      const maxOffset = 250;
+       const newX = (Math.random() - 0.5) * maxOffset * 2;
+       const newY = (Math.random() - 0.5) * maxOffset * 1.5;
+       const newRotate = (Math.random() - 0.5) * 45;
+       const newScale = 0.8 + Math.random() * 0.4;
 
-            btnNo.style.transform = `translate(${newX}px, ${newY}px) rotateZ(${newRotate}deg) scale(${newScale})`; 
-        }
+        btnNo.style.transform = `translate(${newX}px, ${newY}px) rotateZ(${newRotate}deg) scale(${newScale})`;
+   }
 
-        // Sự kiện khi di chuột vào nút "Không"
-        btnNo.addEventListener('mouseover', moveNoButton);
+    // Sự kiện khi di chuột vào nút "Không" (Né tránh)
+    btnNo.addEventListener('mouseover', moveNoButton);
 
-        // Nút "Không" (nếu cố bấm được)
-        btnNo.addEventListener('click', () => {
-            alert('Haha! Anh không cho em bấm "Không" đâu! Em chỉ có thể chọn "Có" thôi! 😉');
-            btnNo.style.transform = `translate(0, 0) rotateZ(0deg) scale(1)`; 
-        });
-        
-    </script>
+    // THAY ĐỔI: Nút "Không" sẽ di chuyển ngẫu nhiên khi được bấm
+    btnNo.addEventListener('click', (e) => {
+        e.preventDefault();
+        moveNoButton();
+        // Tùy chọn: Đặt lại vị trí ban đầu của nút Có sau khi nút Không di chuyển
+        btnYes.style.transform = 'translate(0, 0) scale(1)'; 
+    });
+    
+</script>
 
 </body>
 </html>
