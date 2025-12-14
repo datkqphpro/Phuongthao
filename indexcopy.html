@@ -11,32 +11,68 @@
             overflow: hidden; 
             background-color: #000; /* Nền đen */
             min-height: 100vh;
+            /* Thiết lập để căn giữa nội dung */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Định dạng dòng chữ Giáng sinh vui vẻ */
-        .christmas-message {
+        /* Định dạng nội dung chính (Chữ và Nút) */
+        .main-content {
             position: fixed; /* Giữ cố định ở giữa màn hình */
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%); /* Căn chính giữa hoàn hảo */
-            color: #fff; /* Màu chữ trắng */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 3em; /* Kích thước chữ lớn */
-            font-weight: bold;
-            z-index: 100; /* Quan trọng: Đặt dòng chữ ở lớp cao hơn trái tim */
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Tạo hiệu ứng phát sáng nhẹ */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 100; /* Đặt nội dung ở lớp cao hơn trái tim */
         }
 
+        /* Định dạng dòng chữ Giáng sinh vui vẻ */
+        .christmas-message {
+            color: #fff; /* Màu chữ trắng */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 3em; 
+            font-weight: bold;
+            margin-bottom: 20px; /* Khoảng cách với nút ấn */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); 
+        }
+
+        /* Định dạng Nút Ấn */
+        #nextButton {
+            background-color: #ff69b4; /* Màu hồng nóng */
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            border: 3px solid #ff007f; /* Viền đậm hơn */
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.5);
+        }
+
+        #nextButton:hover {
+            background-color: #ff007f; /* Đậm hơn khi di chuột */
+        }
+
+        #nextButton:active {
+            transform: scale(0.98); /* Hiệu ứng nhấn */
+        }
+
+        /* CSS cho trái tim trôi lơ lửng */
         .heart {
             position: absolute;
             font-size: 24px;
-            color: #ff69b4; /* Màu hồng */
+            color: #ff69b4; 
             animation: float-up 10s ease-out infinite; 
             pointer-events: none;
             user-select: none;
             opacity: 0;
             transform: translateX(-50%); 
-            z-index: 1; /* Trái tim ở lớp thấp hơn dòng chữ */
+            z-index: 1; /* Trái tim ở lớp thấp hơn nội dung */
         }
 
         /* Định nghĩa hiệu ứng trôi lơ lửng */
@@ -49,7 +85,6 @@
                 opacity: 0.8;
             }
             100% {
-                /* Kết thúc: Bay lên hết màn hình, dịch chuyển ngang ngẫu nhiên, và to hơn */
                 transform: translateY(-100vh) translateX(var(--float-offset)) scale(1.5); 
                 opacity: 0;
             }
@@ -58,51 +93,56 @@
 </head>
 <body>
 
-    <h1 class="christmas-message">
-        🎄 Giáng Sinh Vui Vẻ! 💖 Merry Christmas! 🎁
-    </h1>
+    <div class="main-content">
+        <h1 class="christmas-message">
+            🎄 Giáng Sinh Vui Vẻ! 💖 Merry Christmas! 🎁
+        </h1>
+        
+        <button id="nextButton">
+            Bé ấn tiếp vào đây
+        </button>
+    </div>
     <script>
         const body = document.body;
-        const heartCharacters = ['💖', '❤️', '💕', '💘', '💞', '🌟', '🔔']; // Thêm chuông và sao cho không khí Giáng sinh
+        const heartCharacters = ['💖', '❤️', '💕', '💘', '💞', '🌟', '🔔']; 
 
-        // Hàm tạo một trái tim mới
+        // Hàm xử lý khi nút được ấn
+        document.getElementById('nextButton').onclick = function() {
+            // Chuyển hướng trình duyệt đến file dongy.html
+            window.location.href = 'dongy.html';
+        };
+
+        // Hàm tạo một trái tim mới (Phần code này giữ nguyên)
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
 
-            // 1. Chọn ngẫu nhiên biểu tượng
             const charIndex = Math.floor(Math.random() * heartCharacters.length);
             heart.innerHTML = heartCharacters[charIndex];
 
-            // 2. Vị trí xuất phát ngẫu nhiên ở phía dưới màn hình
             const startX = Math.random() * window.innerWidth;
             heart.style.left = startX + 'px';
             heart.style.bottom = (Math.random() * 20) + 'px';
 
-            // 3. Hiệu ứng dịch chuyển ngang ngẫu nhiên (Offset)
             const floatOffset = (Math.random() - 0.5) * 100 + 'px'; 
             heart.style.setProperty('--float-offset', floatOffset);
 
-            // 4. Thiết lập timing ngẫu nhiên
             const delay = Math.random() * 5; 
             heart.style.animationDelay = delay + 's';
 
             const duration = 8 + Math.random() * 4; 
             heart.style.animationDuration = duration + 's';
 
-            // 5. Thiết lập kích thước ngẫu nhiên
             const size = 18 + Math.random() * 10;
             heart.style.fontSize = size + 'px';
 
             body.appendChild(heart);
 
-            // 6. Xóa trái tim sau khi animation kết thúc
             setTimeout(() => {
                 heart.remove();
             }, duration * 1000); 
         }
 
-        // Tạo một trái tim mỗi 150 mili giây
         setInterval(createHeart, 150); 
     </script>
 
